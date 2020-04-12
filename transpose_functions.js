@@ -1,5 +1,6 @@
 <script>
-    var chord_block = document.getElementsByClassName('code lang-c')[0];
+    // var chord_block = document.getElementsByClassName('code lang-c')[0];
+    var chord_block = document.getElementsByClassName('gakuhu')[0];
     chord_block.addEventListener('click', autoscroll, false);
 
     var timerID;
@@ -128,16 +129,30 @@
         var transposed_arr = [];
         // 行ごとに処理
         for(var i=0;i<arr_by_line.length;i++){
-            // コード以外
-            if(isNotChord(arr_by_line[i])){
-                transposed_arr.push(arr_by_line[i]);
-            }
 
-            // コード
-            else{
+        	//chordかlylicかチェック
+        	tmp_list = arr_by_line[i].split('"');
+
+        	//クラス名を求める
+        	if(tmp_list.length < 2){
+        		transposed_arr.push(arr_by_line[i]);
+        		continue;
+        	}
+        	else{
+        		class_name = tmp_list[1];
+        	}
+
+        	// 歌詞はそのまま
+        	if(class_name == 'lylic'){
+        		transposed_arr.push(arr_by_line[i]);
+        		continue;
+        	}
+        	// コード
+        	else if(class_name == 'chord'){
                 var transposed_arr_by_line = []; 
-                var bar = arr_by_line[i];
-                var chord_list = bar.split('/');
+                // tag除去
+                var chords = arr_by_line[i].replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,'');
+                var chord_list = chords.split('/');
 
                 for(var j=0;j<chord_list.length;j++){
                     if(chord_list[j].match(' ')){
@@ -155,7 +170,9 @@
                     }
                 }
                 // 行を文字列に戻す
-                transposed_arr.push(transposed_arr_by_line.join('/'));
+                var converted_chords = transposed_arr_by_line.join('/');
+                converted_chords_with_tag = '<span class="chord">' + converted_chords + '</span>'
+                transposed_arr.push(converted_chords_with_tag);
             }
 
         }// end for
@@ -168,7 +185,8 @@
 
         // 初回のコードを保存しておき、これを移動させる
         if(first_flg){
-            chord_text = chord_block.innerText;
+            //chord_text = chord_block.innerText;
+            chord_text = chord_block.innerHTML;
             first_flg = false;
         }
         // transpose幅を取得

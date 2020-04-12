@@ -9,3 +9,18 @@
 pre.code.lang-c { 
 	font-family: "メイリオ";
 }
+
+pre.gakuhu { 
+	font-family: "メイリオ";
+	background: #f5f5f5;
+	padding: 10px;
+	line-height: 1.7;
+}
+span.lylic {
+	color: 	#650000;
+/*	font-weight: bold;*/
+}
+span.chord {
+	color: #006565;
+	font-weight: bold;
+}
