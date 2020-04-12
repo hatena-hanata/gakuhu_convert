@@ -15,6 +15,7 @@ pre.gakuhu {
 	background: #f5f5f5;
 	padding: 10px;
 	line-height: 1.7;
+    white-space: pre-wrap;
 }
 span.lylic {
 	color: 	#650000;
